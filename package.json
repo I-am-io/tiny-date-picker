@@ -1,8 +1,8 @@
 {
-  "name": "tiny-date-picker",
+  "name": "di-date-range-picker",
   "version": "3.2.8",
   "description": "A small, dependency-free date picker",
-  "main": "dist/tiny-date-picker.js",
+  "main": "dist/date-range-picker.js",
   "scripts": {
     "start": "concurrently \"npm run build:watch\" \"npm run serve\"",
     "selenium": "concurrently \"java -jar selenium-server-standalone-3.0.1.jar\" \"npm start\"",
@@ -18,10 +18,7 @@
     "min:rpcss": "uglifycss date-range-picker.css > date-range-picker.min.css && echo 'Minified CSS:' && cat date-range-picker.min.css | gzip -9f | wc -c",
     "min:rpjs": "uglifyjs dist/date-range-picker.js --source-map \"filename='./dist/date-range-picker.min.js.map'\" -m -c -o dist/date-range-picker.min.js && echo 'Minified JS:' && cat dist/date-range-picker.min.js | gzip -9f | wc -c"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chrisdavies/tiny-date-picker.git"
-  },
+
   "keywords": [
     "date",
     "picker",
