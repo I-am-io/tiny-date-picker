@@ -1234,23 +1234,10 @@
   		start: undefined,
   		end: undefined,
   	};
-  	// var start = TDP(root.querySelector('.dr-cal-start'), cp({}, opts.startOpts, {
-  	//   mode: 'dp-permanent',
-  	//   dateClass: dateClass,
-  	// }));
-  	const end = TinyDatePicker$1(
-  		root.querySelector('.dr-cal-end'),
-  		cp({}, opts.endOpts, {
-  			mode: 'dp-permanent',
-  			dateClass: dateClass,
-  		})
-  	);
-
   	const handlers = {
   		statechange: opts.onStateChange || noop,
   		select: opts.dateSelected || dateSelected,
   	};
-
   	const me = {
   		state: state,
   		setState: setState,
@@ -1258,28 +1245,14 @@
   		off: emitter.off,
   	};
 
-  	// start.on(handlers);
-  	end.on(handlers);
-
-  	// function onStateChange(_, dp) {
-  	//   var d1 = start.state.hilightedDate;
-  	//   var d2 = end.state.hilightedDate;
-  	//   var diff = diffMonths(d1, d2);
-
-  	//   if (diff === 1) {
-  	//     return;
-  	//   }
-
-  	//   if (dp === start) {
-  	//     end.setState({
-  	//       hilightedDate: shiftMonth(dp.state.hilightedDate, 1),
-  	//     });
-  	//   } else {
-  	//     start.setState({
-  	//       hilightedDate: shiftMonth(dp.state.hilightedDate, -1),
-  	//     });
-  	//   }
-  	// }
+  	const picker = TinyDatePicker$1(
+  		root.querySelector('.dr-cal-end'),
+  		cp({}, opts.endOpts, {
+  			mode: 'dp-permanent',
+  			dateClass: dateClass,
+  		})
+  	);
+  	picker.on(handlers);
 
   	function dateSelected(_, dp) {
   		var dt = dp.state.selectedDate;
@@ -1307,23 +1280,25 @@
   	}
 
   	function rerender() {
-  		end.setState({});
+  		// WTF !?
+  		picker.setState({});
   	}
 
+  	//? NOt sure if needed
   	// Hack to avoid a situation where iOS requires double-clicking to select
-  	if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-  		root.addEventListener('mouseover', function mouseOverDate(e) {
-  			if (e.target.classList.contains('dp-day')) {
-  				var dt = new Date(parseInt(e.target.dataset.date));
-  				var changed = !datesEq(dt, hoverDate);
+  	// if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+  	// 	root.addEventListener('mouseover', function mouseOverDate(e) {
+  	// 		if (e.target.classList.contains('dp-day')) {
+  	// 			var dt = new Date(parseInt(e.target.dataset.date));
+  	// 			var changed = !datesEq(dt, hoverDate);
 
-  				if (changed) {
-  					hoverDate = dt;
-  					rerender();
-  				}
-  			}
-  		});
-  	}
+  	// 			if (changed) {
+  	// 				hoverDate = dt;
+  	// 				rerender();
+  	// 			}
+  	// 		}
+  	// 	});
+  	// }
 
   	function dateClass(date, dp) {
   		console.log(dp);
@@ -1332,10 +1307,6 @@
   			(state.end || hoverDate) &&
   			state.start &&
   			inRange(date, state.end || hoverDate, state.start);
-
-  		if (hoverDate) {
-  			dateClasses = dateClasses.concat('dr-hover');
-  		}
 
   		if (datesEq(date, state.start)) {
   			dateClasses = dateClasses.concat('dr-range-start', 'dr-selected');
