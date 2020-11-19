@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (factory((global.DateRangePicker = {})));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.DateRangePicker = {}));
 }(this, (function (exports) { 'use strict';
 
   /**
@@ -252,7 +252,9 @@
 
       inRange: function () {
         return true;
-      }
+      },
+
+      appendTo: document.body,
     };
   }
 
@@ -671,7 +673,7 @@
       containerHTML: '<div class="dp"></div>',
 
       attachToDom: function () {
-        document.body.appendChild(dp.el);
+        opts.appendTo.appendChild(dp.el);
       },
 
       updateInput: function (selectedDate) {
@@ -1023,7 +1025,6 @@
     var dp = BaseMode(root, emit, opts);
 
     dp.close = noop;
-    dp.destroy = noop;
     dp.updateInput = noop;
     dp.shouldFocusOnRender = opts.shouldFocusOnRender;
 
@@ -1358,8 +1359,8 @@
     return (dt < end && dt >= start) || (dt <= start && dt > end);
   }
 
-  exports.TinyDatePicker = TinyDatePicker$1;
   exports.DateRangePicker = DateRangePicker;
+  exports.TinyDatePicker = TinyDatePicker$1;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
