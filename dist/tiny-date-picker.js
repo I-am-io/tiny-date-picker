@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.TinyDatePicker = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.TinyDatePicker = factory());
 }(this, (function () { 'use strict';
 
   /**
@@ -252,7 +252,9 @@
 
       inRange: function () {
         return true;
-      }
+      },
+
+      appendTo: document.body,
     };
   }
 
@@ -671,7 +673,7 @@
       containerHTML: '<div class="dp"></div>',
 
       attachToDom: function () {
-        document.body.appendChild(dp.el);
+        opts.appendTo.appendChild(dp.el);
       },
 
       updateInput: function (selectedDate) {
@@ -758,7 +760,7 @@
       },
 
       render: function () {
-        if (!dp.el || !dp.el.firstChild) {
+        if (!dp.el) {
           return;
         }
 
@@ -1023,7 +1025,6 @@
     var dp = BaseMode(root, emit, opts);
 
     dp.close = noop;
-    dp.destroy = noop;
     dp.updateInput = noop;
     dp.shouldFocusOnRender = opts.shouldFocusOnRender;
 
