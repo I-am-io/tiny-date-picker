@@ -1,6 +1,6 @@
 {
   "name": "di-date-range-picker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A fork of tiny-date-picker",
   "main": "dist/date-range-picker.js",
   "scripts": {
