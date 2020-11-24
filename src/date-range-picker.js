@@ -28,7 +28,7 @@ export var TinyDatePicker = TDP;
 /**
  * TinyDatePicker constructs a new date picker for the specified input
  *
- * @param {HTMLElement} input The input associated with the datepicker
+ * @param {HTMLElement | String} container The DOM element in which the datepicker will be injected
  * @returns {DateRangePickerInst}
  */
 export function DateRangePicker(container, opts = {}) {
@@ -81,10 +81,10 @@ export function DateRangePicker(container, opts = {}) {
 		}
 
 		emitter.emit('statechange', me);
-		rerender();
+		resetPicker();
 	}
 
-	function rerender() {
+	function resetPicker() {
 		// WTF !?
 		picker.setState({});
 	}
@@ -99,14 +99,14 @@ export function DateRangePicker(container, opts = {}) {
 
 	// 			if (changed) {
 	// 				hoverDate = dt;
-	// 				rerender();
+	// 				resetPicker();
 	// 			}
 	// 		}
 	// 	});
 	// }
 
 	function dateClass(date, dp) {
-		console.log(dp);
+
 		var dateClasses = [];
 		var rangeClass =
 			(state.end || hoverDate) &&
@@ -142,7 +142,6 @@ function renderInto(container) {
 
 	container.innerHTML =
 		'<div class="dr-cals">' +
-		'<div class="dr-cal-start"></div>' +
 		'<div class="dr-cal-end"></div>' +
 		'</div>';
 
